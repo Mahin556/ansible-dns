@@ -2,23 +2,20 @@
 - name: Configuring a client machine to become a authrative DNS server client
   hosts: dns_clients 
   vars:
-    auth_dns_ip: 192.168.29.228
-    slv_dns_ip: 192.168.29.167
-    cache_dns_ip: 192.168.29.206
+    dns_ip:
+      - 192.168.1.91
+      - 192.168.1.127
+      - 192.168.1.89
     resolver_file: "/etc/resolv.conf"
   tasks:
-    - name: Configuring a resolve.conf file with authorative and slave DNS server
+    - name: Configuring a resolve.conf file
       copy:
-        content: "nameserver {{ auth_dns_ip }}\nnameserver {{ slv_dns_ip }}"
+        content: |
+          {% for item in dns_ip %}
+          nameserver {{ item }}
+          {% endfor %}
         dest: "{{ resolver_file }}"
         mode: "0644"
-      when: cache_dns_ip is not defined or cache_dns_ip | length == 0
 
-    - name: configuring a resolve.conf file with cache dns server
-      copy:
-        content: "nameserver {{ cache_dns_ip }}\n"
-        dest: "{{ resolver_file }}"
-        mode: "0644"
-      when: cache_dns_ip is defined and cache_dns_ip | length > 0
-
+  
 
