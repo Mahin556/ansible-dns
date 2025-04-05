@@ -65,8 +65,8 @@ zone "." IN {
 	file "named.ca";
 };
 
-{% if frw_zones is defined %}
-{% for zone in frw_zones %}
+{% if forward_zones is defined %}
+{% for zone in forward_zones %}
 zone "{{ zone.name }}" IN {
 	type {{ zone.type }};
 	file "{{ zone.name }}-forward";
@@ -88,8 +88,8 @@ zone "{{ zone.name }}" IN {
 {% endfor %}
 {% endif %}
 
-{% if rvs_zones is defined %}
-{% for zone in rvs_zones %}
+{% if reverse_zones is defined %}
+{% for zone in reverse_zones %}
 zone "{{ zone.name }}" IN {
         type {{ zone.type }};
         file "{{ zone.name }}-reverse";

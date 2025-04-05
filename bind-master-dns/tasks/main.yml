@@ -26,7 +26,7 @@
     mode: "0740"
     group: named
     backup: true
-  loop: "{{ frw_zones }}"
+  loop: "{{ forward_zones }}"
   notify: restart named
   when: config_forward_zone == true
 
@@ -37,7 +37,7 @@
     mode: "0740"
     group: named
     backup: true
-  loop: "{{ rvs_zones }}"
+  loop: "{{ reverse_zones }}"
   notify: restart named
   when: config_reverse_zone == true
 

@@ -1,4 +1,4 @@
-rvs_zones: #list
+reverse_zones: #list
   - name: "2.11.10.in-addr.arpa"
     type: master
     notify_on: "yes"

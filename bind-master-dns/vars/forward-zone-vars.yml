@@ -1,4 +1,4 @@
-frw_zones: #list
+forward_zones: #list
   - name: webfix.com
     type: master
     notify_on: "yes"
