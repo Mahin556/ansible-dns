@@ -1,0 +1,42 @@
+pkgs:
+  - bind
+  - bind-utils
+  - firewalld
+
+srvs:
+  - named
+  - firewalld
+
+conf_dir: /etc
+
+zone_directory: "/var/named"
+
+listening_port: 53
+
+ipv4_interfaces: #list
+  - localhost
+  - 192.168.29.228
+
+ipv6_interfaces: #list
+  - ::1
+
+allow_query: #list
+  - localhost
+  - 192.168.29.0/24
+
+allow_transfer: #list
+  - localhost
+  - 192.168.29.167
+
+allow_update: #list
+  - 192.168.29.167
+
+also_notify:
+
+also_update:
+
+recursive: "yes" #yes or no only
+
+
+
+

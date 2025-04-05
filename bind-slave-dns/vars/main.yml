@@ -1,0 +1,31 @@
+pkgs:
+  - bind
+  - bind-utils
+  - firewalld
+
+srvs:
+  - named
+  - firewalld
+
+listening_port: 53
+
+ipv4_interfaces: #list
+  - localhost
+  - 192.168.29.167
+
+ipv6_interfaces: #list
+  - ::1
+
+allow_query: #list
+  - localhost
+  - 192.168.29.0/24
+
+allow_transfer: #list
+  - none
+
+recursive: "yes" #yes or no only
+
+conf_dir: /etc
+zone_directory: "/var/named"
+slv_zone_dir: "slaves"
+

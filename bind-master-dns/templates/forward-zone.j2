@@ -1,0 +1,32 @@
+$TTL {{ item.soa.ttl | default('86400') }}
+@	IN 	SOA	{{ item.soa.ns|default('localhost') }}. {{ item.soa.mail }}. (
+					{{ item.serial|default('1') }}	; serial
+					{{ item.soa.refresh|default('604800') }}	; refresh
+					{{ item.soa.retry|default('86400') }}	; retry
+					{{ item.soa.expire|default('2419200') }}	; expire
+					{{ item.soa.minimum|default('604800') }} )	; minimum
+
+{% if item.ns is defined %}
+{% for record in item.ns %}
+@	IN 	NS 	{{ record.name }}.
+
+{% endfor %}
+{% endif %}
+
+{% if item.mx is defined %}
+{% for record in item.mx %}
+@ 	IN 	MX 	{{ record.priority|default('10') }}	{{ record.name }}.
+
+{% endfor %}
+{% endif %}
+
+{% if item.records is defined %}
+{% for record in item.records %}
+{{ record.name }}	IN	{{ record.type|default('A') }}	{{ record.value }} {% if record.type == "CNAME" %}.{% endif %}
+
+{% endfor %}
+{% endif %}
+
+
+
+
