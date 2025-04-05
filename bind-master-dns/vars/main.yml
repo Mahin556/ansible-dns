@@ -1,30 +1,28 @@
 ipv4_interfaces: #list
   - localhost
-  - 192.168.29.228
+  - 192.168.1.96
 
 ipv6_interfaces: #list
   - ::1
 
-allow_query: #list
+allow_query_global: #list
   - localhost
-  - 192.168.29.0/24
+  - 192.168.1.0/24
 
-allow_transfer: #list
+allow_transfer_global: #list
   - localhost
-  - 192.168.29.167
+  - 192.168.1.127
 
-allow_update: #list
-  - 192.168.29.167
-
-also_notify:
-
-also_update:
+notify_global: "yes"
 
 # TO CONTROL FORWARD AND REVERSE ZONE CONFIGURATION
 config_forward_zone: true   
-config_reverse_zone: false
+config_reverse_zone: true
 
 recursive: "yes" #yes or no only
+allow_resursion:
+  - localhost
+  - localnets
 
 # DEFAULT VARS ---> /default/main.yml
 

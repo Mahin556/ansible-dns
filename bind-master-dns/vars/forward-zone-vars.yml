@@ -4,8 +4,8 @@ frw_zones: #list
     notify_on: "yes"
     allow_transfer:
       - 192.168.1.127
-    also_notify: 
-      - 192.168.1.127  
+    #also_notify: 
+    #allow_query:
     soa: 
       ns: "ns1.webfix.com"
       mail: "mahin123@webfix.com"
@@ -39,7 +39,7 @@ frw_zones: #list
         value: "fe80::20c:29ff:fe94:3b48"
       - name: "mail"
         type: "CNAME"
-        value: "mx1.example.com"  # without . at the end
+        value: "mx1.webfix.com"  # without . at the end
       - name: "www"
         type: "TXT"
         value: "basic txt record"

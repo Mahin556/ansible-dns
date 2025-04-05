@@ -16,8 +16,15 @@ options {
 	memstatistics-file "/var/named/data/named_mem_stats.txt";
 	secroots-file	"/var/named/data/named.secroots";
 	recursing-file	"/var/named/data/named.recursing";
-	allow-query     { {% for allowed in allow_query %}{{ allowed }}; {% endfor %}};
-	allow-transfer  { {% for allowed in allow_transfer %}{{ allowed }}; {% endfor %}};
+{% if allow_query_global is defined and allow_query_global | length > 0 %}
+	allow-query     { {% for item in allow_query_global %}{{ item }}; {% endfor %}};
+{% endif %}
+{% if allow_transfer_global is defined and allow_transfer_global | length > 0 %}	
+	allow-transfer  { {% for item in allow_transfer_global %}{{ item }}; {% endfor %}};
+{% endif %}
+{% if notify_global is defined and notify_global | length > 0 %}
+        notify  {{ notify_global }}; 
+{% endif %}
 	
 	/* 
 	 - If you are building an AUTHORITATIVE DNS server, do NOT enable recursion.
@@ -30,7 +37,10 @@ options {
 	   reduce such attack surface 
 	*/
 	recursion {{ recursive }};
-
+{% if allow_resursion is defined and allow_resursion | length > 0 %}
+        allow-recursion { {% for item in allow_resursion %}{{ item }}; {% endfor %}};
+{% endif %}
+		
 	dnssec-validation yes;
 
 	managed-keys-directory "/var/named/dynamic";
@@ -63,11 +73,14 @@ zone "{{ zone.name }}" IN {
 {% if zone.notify_on is defined and zone.notify_on | length > 0 %}
         notify {{ zone.notify_on }};
 {% endif %}
+{% if zone.allow_query is defined and zone.allow_query | length > 0 %}
+        allow-query { {% for item in zone.allow_query %}{{ item }}; {% endfor %}};
+{% endif %}
 {% if zone.allow_transfer is defined and zone.allow_transfer | length > 0 %} 
-	allow-transfer { {% for host in zone.allow_transfer %}{{ host }}; {% endfor %}}; 
+	allow-transfer { {% for item in zone.allow_transfer %}{{ item }}; {% endfor %}}; 
 {% endif %}
 {% if zone.also_notify is defined and zone.also_notify | length > 0 %}
-        also-notify { {% for host in zone.also_notify %}{{ host }}; {% endfor %}};
+        also-notify { {% for item in zone.also_notify %}{{ item }}; {% endfor %}};
 {% endif %}
 
 }; 
@@ -83,11 +96,14 @@ zone "{{ zone.name }}" IN {
 {% if zone.notify_on is defined and zone.notify_on | length > 0 %}
         notify {{ zone.notify_on }};
 {% endif %}
+{% if zone.allow_query is defined and zone.allow_query | length > 0 %}
+        allow-query { {% for item in zone.allow_query %}{{ item }}; {% endfor %}};
+{% endif %}
 {% if zone.allow_transfer is defined and zone.allow_transfer | length > 0 %}
-        allow-transfer { {% for host in zone.allow_transfer %}{{ host }}; {% endfor %}};
+        allow-transfer { {% for item in zone.allow_transfer %}{{ item }}; {% endfor %}};
 {% endif %}
 {% if zone.also_notify is defined and zone.also_notify | length > 0 %}
-        also-notify { {% for host in zone.also_notify %}{{ host }}; {% endfor %}};
+        also-notify { {% for item in zone.also_notify %}{{ item }}; {% endfor %}};
 {% endif %}
 
 };
