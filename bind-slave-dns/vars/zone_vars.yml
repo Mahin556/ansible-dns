@@ -1,0 +1,21 @@
+forward_zones:
+  - name: webfix.com
+    master: 192.168.1.91
+    allow_notify: 192.168.1.91
+    allow-query: 
+      - localhost
+      - localnets
+  - name: tctech.com
+    master: 192.168.1.91
+    allow_notify: "none"
+
+reverse_zones: #list
+  - name: "2.11.10.in-addr.arpa"
+    master: 192.168.1.91
+    allow_notify: 192.168.1.91
+    allow-query: 
+      - localhost
+      - localnets
+  - name: "3.11.10.in-addr.arpa"
+    master: 192.168.1.91
+    allow_notify: "none"

@@ -1,6 +1,7 @@
 ---
 - name: Configuring a client machine to become a authrative DNS server client
   hosts: dns_clients 
+  gather_facts: no
   vars:
     dns_ip:
       - 192.168.1.91

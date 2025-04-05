@@ -1,31 +1,20 @@
-pkgs:
-  - bind
-  - bind-utils
-  - firewalld
-
-srvs:
-  - named
-  - firewalld
-
-listening_port: 53
-
 ipv4_interfaces: #list
   - localhost
-  - 192.168.29.167
+  - 192.168.1.127
 
 ipv6_interfaces: #list
   - ::1
 
-allow_query: #list
+allow_query_global: #list
   - localhost
-  - 192.168.29.0/24
+  - 192.168.1.0/24
 
 allow_transfer: #list
   - none
 
 recursive: "yes" #yes or no only
+allow_resursion:
+  - localhost
+  - localnets
 
-conf_dir: /etc
-zone_directory: "/var/named"
-slv_zone_dir: "slaves"
-
+# DEFAULT VARS --> defaults/main.yml

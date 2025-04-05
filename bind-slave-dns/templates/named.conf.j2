@@ -16,9 +16,9 @@ options {
 	memstatistics-file "/var/named/data/named_mem_stats.txt";
 	secroots-file	"/var/named/data/named.secroots";
 	recursing-file	"/var/named/data/named.recursing";
-	allow-query     { {% for allowed in allow_query %}{{ allowed }}; {% endfor %}};
-	allow-transfer  { {% for allowed in allow_transfer %}{{ allowed }}; {% endfor %}};
-	
+{% if allow_query_global is defined and allow_query_global | length > 0 %}
+	allow-query     { {% for item in allow_query_global %}{{ item }}; {% endfor %}};
+{% endif %}
 	/* 
 	 - If you are building an AUTHORITATIVE DNS server, do NOT enable recursion.
 	 - If you are building a RECURSIVE (caching) DNS server, you need to enable 
@@ -29,7 +29,11 @@ options {
 	   attacks. Implementing BCP38 within your network would greatly
 	   reduce such attack surface 
 	*/
+
 	recursion {{ recursive }};
+{% if allow_resursion is defined and allow_resursion | length > 0 %}
+        allow-recursion { {% for item in allow_resursion %}{{ item }}; {% endfor %}};
+{% endif %}
 
 	dnssec-validation yes;
 
@@ -55,22 +59,28 @@ zone "." IN {
 	file "named.ca";
 };
 
-{% for zone in frw_zones %}
+{% for zone in forward_zones %}
 zone "{{ zone.name }}" IN {
-	type {{ zone.type }};
-	file "{{ slv_zone_dir}}/{{ zone.name }}-forward";
+	type slave;
+	file "{{ slv_zone_dir_name}}/{{ zone.name }}-forward";
 	masters { {{ zone.master }}; };
-
+	allow-notify { {{ zone.allow_notify | default(zone.master) }}; };
+{% if zone.allow_query is defined and zone.allow_query | length > 0 %}
+        allow-query { {% for item in zone.allow_query %}{{ item }}; {% endfor %}};
+{% endif %}
 };
 
 {% endfor %}
 
-{% for zone in rvs_zones %}
+{% for zone in reverse_zones %}
 zone "{{ zone.name }}" IN {
-        type {{ zone.type }};
-        file "{{ slv_zone_dir}}/{{ zone.name }}-reverse";
+        type slave;
+        file "{{ slv_zone_dir_name}}/{{ zone.name }}-reverse";
         masters { {{ zone.master }}; };
-
+	allow-notify { {{ zone.allow_notify | default(zone.master) }}; };
+{% if zone.allow_query is defined and zone.allow_query | length > 0 %}
+        allow-query { {% for item in zone.allow_query %}{{ item }}; {% endfor %}};
+{% endif %}
 };
 
 {% endfor %}

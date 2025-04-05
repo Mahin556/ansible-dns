@@ -1,2 +1,13 @@
 ---
-# handlers file for bind-slave-dns
+- name: restart named
+  service:
+    name: named
+    state: restarted
+    enabled: true
+
+- name: Configure firewalle rules
+  firewalld:
+    service: dns
+    permanent: true
+    state: enabled
+    immediate: true

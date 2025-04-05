@@ -5,9 +5,9 @@
     - slave_dns
     - cache_dns
   vars:
-    - master_config: false
-    - slave_config: false
-    - cache_config: true
+    - master_config: 1
+    - slave_config: 1
+    - cache_config: 0
   tasks:
     - name: CONFIGURING A DNS MASTER SERVER
       include_role:

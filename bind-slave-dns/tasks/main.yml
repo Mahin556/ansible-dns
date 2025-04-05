@@ -4,34 +4,25 @@
     name: "{{ item }}"
     state: present
   loop: "{{ pkgs }}"
+  notify: restart named
 
 - name: Including a zone variable files
-  include_vars: "{{ item }}"
-  loop:
-    - forward-zone-vars.yml
-    - reverse-zone-vars.yml
+  include_vars: zone_vars.yml
 
 - name: Configuring a configuration file
   template:
-    src: ./slave-named.conf.j2
+    src: named.conf.j2
     dest: "{{ conf_dir }}/named.conf"
+  notify: restart named
 
 - name: Configuring a SELINUX
   selinux:
     policy: targeted
     state: permissive
 
-- name: Starting a services
+- name: Restarting a firewalld
   service:
-    name: "{{ item }}"
+    name: firewalld
     state: restarted
     enabled: true
-  loop: "{{ srvs }}"
-
-- name: Configuring a firewalle rules
-  firewalld:
-    service: dns
-    permanent: true
-    state: enabled
-    immediate: true
-
+  notify: Configure firewalle rules
