@@ -3,9 +3,9 @@ frw_zones: #list
     type: master
     notify_on: "yes"
     allow_transfer:
-      - 192.168.29.167
+      - 192.168.1.127
     also_notify: 
-      - 192.168.29.167  
+      - 192.168.1.127  
     soa: 
       ns: "ns1.webfix.com"
       mail: "mahin123@webfix.com"
@@ -24,24 +24,34 @@ frw_zones: #list
     records:
       - name: "ns1"
         type: "A"
-        value: "192.168.29.228"
+        value: "192.168.1.91"
       - name: "ns2"
         type: "A"
-        value: "192.168.29.167"
+        value: "192.168.1.127"
       - name: "mx1"
         type: "A"
-        value: "192.168.29.18"
+        value: "192.168.1.133"
       - name: "www"
         type: "A"
-        value: "192.168.29.18"
+        value: "192.168.1.133"
+      - name: "www"
+        type: "AAAA"
+        value: "fe80::20c:29ff:fe94:3b48"
+      - name: "mail"
+        type: "CNAME"
+        value: "mx1.example.com"  # without . at the end
+      - name: "www"
+        type: "TXT"
+        value: "basic txt record"
+
 
   - name: tctech.com
     type: master
     notify_on: "yes"
     allow_transfer:  
-      - 192.168.29.167
+      - 192.168.1.127
     also_notify: 
-      - 192.168.29.167 
+      - 192.168.1.127 
     soa: 
       ns: "ns1.tctech.com"
       mail: "mahin123@tctech.com"
@@ -60,15 +70,50 @@ frw_zones: #list
     records:
       - name: "ns1"
         type: "A"
-        value: "192.168.29.228"
+        value: "192.168.1.91"
       - name: "ns2"
         type: "A"
-        value: "192.168.29.167"
+        value: "192.168.1.127"
       - name: "mx1"
         type: "A"
-        value: "192.168.29.206"
+        value: "192.168.1.31"
       - name: "www"
         type: "A"
-        value: "192.168.29.206"
+        value: "192.168.1.31"
  
 
+  - name: demo.com
+    type: master
+    notify_on: "yes"
+    allow_transfer:  
+      - 192.168.1.127
+    also_notify: 
+      - 192.168.1.127 
+    soa: 
+      ns: "ns1.demo.com"
+      mail: "mahin123@grass.com"
+      ttl: "1H"
+      serial: 100
+      refresh: 1H
+      retry: 300
+      expire: 1D
+      minimum: 3H
+    ns:
+      - name: ns1.demo.com
+      - name: ns2.demo.com
+    mx:
+      - name: mx1.demo.com
+        priority: 10
+    records:
+      - name: "ns1"
+        type: "A"
+        value: "192.168.1.91"
+      - name: "ns2"
+        type: "A"
+        value: "192.168.1.127"
+      - name: "mx1"
+        type: "A"
+        value: "192.168.1.31"
+      - name: "www"
+        type: "A"
+        value: "192.168.1.31"

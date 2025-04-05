@@ -4,6 +4,7 @@
     name: "{{ item }}"
     state: present
   loop: "{{ pkgs }}"
+  notify: restart named
 
 - name: Including a zone vars
   include_vars: "{{ item }}"
@@ -11,10 +12,12 @@
     - forward-zone-vars.yml
     - reverse-zone-vars.yml
 
-- name: Configuring a configuration file
+- name: Configuring a bind configuration file
   template:
-    src: master-named.conf.j2
+    src: named.conf.j2
     dest: "{{ conf_dir }}/named.conf"
+    backup: true
+  notify: restart named
   
 - name: configuring a forward-zone files
   template:
@@ -22,7 +25,10 @@
     dest: "{{ zone_directory }}/{{ item.name }}-forward"
     mode: "0740"
     group: named
+    backup: true
   loop: "{{ frw_zones }}"
+  notify: restart named
+  when: config_forward_zone == true
 
 - name: configuring a reverse-zone files
   template:
@@ -30,26 +36,23 @@
     dest: "{{ zone_directory }}/{{ item.name }}-reverse"
     mode: "0740"
     group: named
+    backup: true
   loop: "{{ rvs_zones }}"
+  notify: restart named
+  when: config_reverse_zone == true
 
 - name: Configuring a SELINUX
   selinux:
     policy: targeted
     state: permissive
 
-- name: Starting a services
+- name: Restarting firewalld....
   service:
-    name: "{{ item }}"
+    name: firewalld
     state: restarted
     enabled: true
-  loop: "{{ srvs }}"
+  notify: Config firewalle rules
 
-- name: Configuring a firewalle rules
-  firewalld:
-    service: dns
-    permanent: true
-    state: enabled
-    immediate: true
 
 
 

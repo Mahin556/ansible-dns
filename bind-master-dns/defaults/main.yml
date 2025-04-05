@@ -1,2 +1,11 @@
 ---
 # defaults file for bind-master-dns
+
+pkgs:
+  - bind
+  - bind-utils
+  - firewalld
+
+conf_dir: /etc
+zone_directory: "/var/named"
+listening_port: 53

@@ -1,2 +1,15 @@
 ---
 # handlers file for bind-master-dns
+
+- name: restart named
+  service:
+    name: named
+    state: restarted
+    enabled: true
+
+- name: Config firewalle rules
+  firewalld:
+    service: dns
+    permanent: true
+    state: enabled
+    immediate: true

@@ -3,9 +3,9 @@ rvs_zones: #list
     type: master
     notify_on: "yes"
     allow_transfer:
-      - 192.168.29.167
+      - 192.168.1.127
     also_notify:
-      - 192.168.29.167
+      - 192.168.1.127
     soa: 
       ns: "ns1.webfix.com"
       mail: "mahin123@webfix.com"
@@ -36,9 +36,9 @@ rvs_zones: #list
     type: master
     notify_on: "yes"
     allow_transfer:
-      - 192.168.29.167
+      - 192.168.1.127
     also_notify: 
-      - 192.168.29.167 
+      - 192.168.1.127 
     soa: 
       ns: "ns1.tctech.com"
       mail: "mahin123@tctech.com"

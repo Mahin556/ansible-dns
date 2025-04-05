@@ -1,18 +1,3 @@
-pkgs:
-  - bind
-  - bind-utils
-  - firewalld
-
-srvs:
-  - named
-  - firewalld
-
-conf_dir: /etc
-
-zone_directory: "/var/named"
-
-listening_port: 53
-
 ipv4_interfaces: #list
   - localhost
   - 192.168.29.228
@@ -35,8 +20,13 @@ also_notify:
 
 also_update:
 
+# TO CONTROL FORWARD AND REVERSE ZONE CONFIGURATION
+config_forward_zone: true   
+config_reverse_zone: false
+
 recursive: "yes" #yes or no only
 
+# DEFAULT VARS ---> /default/main.yml
 
 
 
