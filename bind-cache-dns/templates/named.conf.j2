@@ -57,7 +57,7 @@ zone "." IN {
 zone "." IN {
     	type forward;
 	forward only;
-	forwarders { {% for forwarder in forwarders %}{{ forwarder }}; {% endfor %}};
+	forwarders { {% for forwarder in forwarders %}{{ forwarder }}; {% endfor %} };
 };
 
 // Enabled reverse query
@@ -65,7 +65,7 @@ zone "." IN {
 zone "{{ zone }}" IN {
         type forward;
 	forward only;
-	forwarders { {% for forwarder in forwarders %}{{ forwarder }}; {% endfor %}};
+	forwarders { {% for forwarder in forwarders %}{{ forwarder }}; {% endfor %} };
 };
 
 {% endfor %}

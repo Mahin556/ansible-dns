@@ -1,2 +1,13 @@
 ---
-# handlers file for bind-cache-dns
+- name: restart named
+  service:
+    name: named
+    state: restarted
+    enabled: true
+
+- name: Config firewall rules
+  firewalld:
+    service: dns
+    permanent: true
+    state: enabled
+    immediate: true

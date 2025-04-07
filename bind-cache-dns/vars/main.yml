@@ -1,11 +1,7 @@
 ---
-
-listening_port: "53"
-
 ipv4_interfaces:
   - localhost
-  - 192.168.29.206
-
+  - 192.168.1.88
 ipv6_interfaces:
   - ::1
 
@@ -14,17 +10,9 @@ allow_query:
   - 192.168.29.0/24
   - 192.168.1.0/24 
 
-pkgs:
-  - bind
-  - bind-utils
-
-srvs:
-  - named
-  - firewalld
-
 forwarders:
-  - 192.168.29.228
-  - 192.168.29.167
+  - 192.168.1.91
+  - 192.168.1.89
 
 recursive: "yes"
 

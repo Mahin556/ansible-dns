@@ -4,27 +4,23 @@
     name: "{{ item }}"
     state: present
   loop: "{{ pkgs }}"
+  notify: restart named
 
 - name: Configuring a bind cache server
   template:
     src: named.conf.j2
     dest: /etc/named.conf
+  notify: restart named
 
 - name: Configuring a SELINUX
   selinux:
     policy: targeted
     state: permissive
 
-- name: Starting a services
+- name: Starting a firewalld
   service:
-    name: "{{ item }}"
+    name: firewalld
     state: restarted
     enabled: true
-  loop: "{{ srvs }}"
-
-- name: Configuring a firewalle rules
-  firewalld:
-    service: dns
-    permanent: true
-    state: enabled
-    immediate: true
+  notify: Config firewall rules
+  

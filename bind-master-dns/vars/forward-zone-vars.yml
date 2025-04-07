@@ -3,7 +3,7 @@ forward_zones: #list
     type: master
     notify_on: "yes"
     allow_transfer:
-      - 192.168.1.127
+      - 192.168.1.89
     #also_notify: 
     #allow_query:
     soa: 
@@ -27,7 +27,7 @@ forward_zones: #list
         value: "192.168.1.91"
       - name: "ns2"
         type: "A"
-        value: "192.168.1.127"
+        value: "192.168.1.89"
       - name: "mx1"
         type: "A"
         value: "192.168.1.133"
@@ -49,9 +49,9 @@ forward_zones: #list
     type: master
     notify_on: "yes"
     allow_transfer:  
-      - 192.168.1.127
-    also_notify: 
-      - 192.168.1.127 
+      - 192.168.1.89
+        #also_notify: 
+        #- 192.168.1.89 
     soa: 
       ns: "ns1.tctech.com"
       mail: "mahin123@tctech.com"
@@ -73,7 +73,7 @@ forward_zones: #list
         value: "192.168.1.91"
       - name: "ns2"
         type: "A"
-        value: "192.168.1.127"
+        value: "192.168.1.89"
       - name: "mx1"
         type: "A"
         value: "192.168.1.31"
@@ -86,12 +86,12 @@ forward_zones: #list
     type: master
     notify_on: "yes"
     allow_transfer:  
-      - 192.168.1.127
-    also_notify: 
-      - 192.168.1.127 
+      - 192.168.1.89
+        #also_notify: 
+        #- 192.168.1.89 
     soa: 
       ns: "ns1.demo.com"
-      mail: "mahin123@grass.com"
+      mail: "mahin123@demo.com"
       ttl: "1H"
       serial: 100
       refresh: 1H
@@ -110,7 +110,7 @@ forward_zones: #list
         value: "192.168.1.91"
       - name: "ns2"
         type: "A"
-        value: "192.168.1.127"
+        value: "192.168.1.89"
       - name: "mx1"
         type: "A"
         value: "192.168.1.31"
