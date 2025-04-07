@@ -1,2 +1,6 @@
 ---
-# defaults file for unbound-cache-dns
+pkgs:
+  - unbound
+  - firewalld
+
+listening_port: 53

@@ -5,8 +5,8 @@
     - slave_dns
     - cache_dns
   vars:
-    - master_config: 0
-    - slave_config: 0
+    - master_config: 1
+    - slave_config: 1
     - cache_config: 1
   tasks:
     - name: CONFIGURING A DNS MASTER SERVER
@@ -29,10 +29,12 @@
     - name: Force all notified handlers to run at this point
       ansible.builtin.meta: flush_handlers
 
-    - name: CONFIGURING A DNS CACHE SERVER
+    - name: CONFIGURING A BIND DNS CACHE SERVER
       include_role:
         name: bind-cache-dns
       when: 
         - inventory_hostname in groups['cache_dns'] 
         - cache_config == true
-    
+
+
+

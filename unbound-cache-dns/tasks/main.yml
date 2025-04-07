@@ -4,29 +4,25 @@
     name: "{{ item }}"
     state: present
   loop: "{{ pkgs }}"
+  notify: restart unbound
 
 - name: Configure the unbound server
   template:
     src: cache.conf.j2
     dest: "{{ unbound_conf }}"
-  
+  notify: restart unbound
+
 - name: Configuring a selinux
   selinux:
     policy: targeted
     state: permissive
 
-- name: starting a services
+- name: starting firewalld
   service:
-    name: "{{ item }}"
+    name: firewalld
     state: restarted
     enabled: true
-  loop: "{{ srvs }}"
+  notify: config firewall rules
 
-- name: configuring a firewall
-  firewalld:
-    service: dns
-    state: enabled
-    permanent: true
-    immediate: true
 
 

@@ -1,15 +1,5 @@
-pkgs:
-  - unbound
-  - firewalld
-
-srvs:
-  - unbound
-  - firewalld
-
 interfaces:
-  - 0.0.0.0
-
-listening_port: 53
+  - 0.0.0.0 #all
 
 unbound_conf: "/etc/unbound/unbound.conf"
 
@@ -22,9 +12,11 @@ access_control_list:
 allowed_domains:
   - "webfix.com"
   - "tctech.com"
+  - "3.11.10.in-addr.arpa"
+  - "2.11.10.in-addr.arpa"
 
 dns_addresses:
-  - 192.168.29.228
-  - 192.168.29.167
+  - 192.168.1.91
+  - 192.168.1.89
 
 

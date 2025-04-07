@@ -1,2 +1,13 @@
 ---
-# handlers file for unbound-cache-dns
+- name: restart unbound
+  service:
+    name: unbound
+    state: restarted
+    enabled: true
+
+- name: config firewall rules
+  firewalld:
+    service: dns
+    state: enabled
+    permanent: true
+    immediate: true
